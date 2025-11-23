@@ -108,6 +108,59 @@
     </tr>
     <!-- END OF PAPER ENTRY -->
 
+     <tr onmouseout="paper1_stop()" onmouseover="paper1_start()" bgcolor="#ffffd0">
+      <td style="padding:16px;width:20%;vertical-align:middle">
+        <div class="one">
+          <div class="two" id='paper1_image'>
+            <!-- If you have a video preview, uncomment the video tag and remove the first img -->
+            <!--
+            <video width=100% height=100% muted autoplay loop>
+              <source src="images/paper1_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            -->
+            <img src='./images/progs_teaser.jpg' width=100%>
+          </div>
+          <img src='./images/progs_teaser.jpg' width=100%>
+        </div>
+        <script type="text/javascript">
+          function paper1_start() {
+            document.getElementById('paper1_image').style.opacity = "1";
+          }
+
+          function paper1_stop() {
+            document.getElementById('paper1_image').style.opacity = "0";
+          }
+          paper1_stop()
+        </script>
+      </td>
+      <td style="padding:8px;width:80%;vertical-align:middle">
+        <a href="#">
+          <span class="papertitle">PRoGS: Progressive Rendering of Gaussian Splats</span>
+        </a>
+        <br>
+        <strong>Brent Zoomers</strong>,
+        Maarten Wijnants, 
+        Ivan Molenaers, 
+        Joni Vanherck, 
+        Jeroen Put, 
+        Lode Jorissen, 
+        Nick Michiels
+        
+        <a href="#">project page</a>
+        /
+        <a href="#">arXiv</a>
+        /
+        <a href="#">code (coming soon)</a>
+        <p></p>
+        <p>
+        By considering contribution of Gaussians instead, we can better prioritize which Gaussians to render first to 
+        get a better representation of a scene faster.
+
+        </p>
+      </td>
+    </tr>
+
           </tbody></table>
           
           <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
