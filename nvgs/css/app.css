@@ -157,3 +157,87 @@ span.highlight {
 	margin-left: 0.5em;
 	margin-right: 0.5em;
 }
+
+/* Container for the comparison */
+.video-compare-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 20px; /* Spacing */
+    --position: 50%;
+}
+
+/* Both videos need to sit on top of each other */
+.video-base, .video-overlay {
+    width: 100%;
+    display: block;
+}
+
+/* The clipper div restricts the visibility of the top video */
+.video-clipper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 50%; /* Default start position */
+    overflow: hidden;
+    border-right: 2px solid white; /* The white line separator */
+    z-index: 2;
+}
+
+/* IMPORTANT: The top video inside the clipper must remain full width 
+   so it doesn't squish when we reduce the clipper width */
+.video-overlay {
+    width: 200%; /* We adjust this via JS, but usually needs to match parent width */
+    max-width: none; /* Override bootstrap if needed */
+}
+
+/* The interactive slider input (invisible but clickable) */
+.slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Invisible */
+    cursor: ew-resize;
+    z-index: 3;
+    margin: 0;
+}
+
+/* Optional: Labels */
+.slider-label {
+    position: absolute;
+    bottom: 10px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 4;
+}
+.label-left { left: 10px; }
+.label-right { right: 10px; }
+
+/* Optional: A custom handle circle in the middle */
+.video-compare-container::after {
+    content: '\f07e'; /* FontAwesome resize icon or use text like '< >' */
+    font-family: 'FontAwesome'; 
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background: white;
+    color: #333;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 18px;
+    pointer-events: none; /* Click through to slider */
+    z-index: 4;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    left: var(--position);
+}

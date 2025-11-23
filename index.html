@@ -82,7 +82,7 @@
         </script>
       </td>
       <td style="padding:8px;width:80%;vertical-align:middle">
-        <a href="#">
+        <a href="./nvgs/index.html">
           <span class="papertitle">NVGS: Neural Visibility for Occlusion Culling in 3D Gaussian Splatting</span>
         </a>
         <br>
@@ -92,6 +92,7 @@
         Lode Jorissen,
         Marcus Magnor,
         Nick Michiels
+       
         
         <a href="./nvgs/index.html">project page</a>
         /
@@ -107,6 +108,57 @@
       </td>
     </tr>
     <!-- END OF PAPER ENTRY -->
+
+     <tr onmouseout="paper1_stop()" onmouseover="paper1_start()" bgcolor="#ffffd0">
+      <td style="padding:16px;width:20%;vertical-align:middle">
+        <div class="one">
+          <div class="two" id='paper1_image'>
+            <!-- If you have a video preview, uncomment the video tag and remove the first img -->
+            <!--
+            <video width=100% height=100% muted autoplay loop>
+              <source src="images/paper1_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            -->
+            <img src='./images/neuralpc.jpg' width=100%>
+          </div>
+          <img src='./images/neuralpc.jpg' width=100%>
+        </div>
+        <script type="text/javascript">
+          function paper1_start() {
+            document.getElementById('paper1_image').style.opacity = "1";
+          }
+
+          function paper1_stop() {
+            document.getElementById('paper1_image').style.opacity = "0";
+          }
+          paper1_stop()
+        </script>
+      </td>
+      <td style="padding:8px;width:80%;vertical-align:middle">
+        <a href="https://arxiv.org/abs/2502.11618">
+          <span class="papertitle">Real-time Neural Rendering of LiDAR Point Clouds </span>
+        </a>
+        <br>
+        Joni Vanherck*, 
+        <strong>Brent Zoomers*</strong>, 
+        Tom Mertens,
+        Lode Jorissen, 
+        Nick Michiels
+        <br>
+        (*=equal contribution)
+        <br>
+        <i>Eurographics, 2025</i><br>
+        <a href="https://arxiv.org/abs/2502.11618">arXiv</a>
+        /
+        <a href="https://zenodo.org/records/15516933">code</a>
+        <p></p>
+        <p>
+          Real-time rendering of point clouds by using depth-filter that preserves edges, after which we utilize a pre-trained UNet for hole filling.
+          Due to the edge preserving nature of the depth filter, his image allows feature matching between these renders and actual images.
+        </p>
+      </td>
+    </tr>
 
      <tr onmouseout="paper1_stop()" onmouseover="paper1_start()" bgcolor="#ffffd0">
       <td style="padding:16px;width:20%;vertical-align:middle">
@@ -145,17 +197,300 @@
         Joni Vanherck, 
         Jeroen Put, 
         Lode Jorissen, 
-        Nick Michiels
-        
-        <a href="#">project page</a>
-        /
-        <a href="#">arXiv</a>
-        /
-        <a href="#">code (coming soon)</a>
-        <p></p>
+        Nick Michiels<br>
+        <i>WACV, 2025</i><br>
+        <a href="https://arxiv.org/abs/2409.01761">arXiv</a>
         <p>
         By considering contribution of Gaussians instead, we can better prioritize which Gaussians to render first to 
         get a better representation of a scene faster.
+
+        </p>
+      </td>
+    </tr>
+
+    <!--  -->
+
+    <tr onmouseout="paper1_stop()" onmouseover="paper1_start()" bgcolor="#ffffd0">
+      <td style="padding:16px;width:20%;vertical-align:middle">
+        <div class="one">
+          <div class="two" id='paper1_image'>
+            <!-- If you have a video preview, uncomment the video tag and remove the first img -->
+            <!--
+            <video width=100% height=100% muted autoplay loop>
+              <source src="images/paper1_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            -->
+            <img src='./images/cutnsplat.jpg' width=100%>
+          </div>
+          <img src='./images/cutnsplat.jpg' width=100%>
+        </div>
+        <script type="text/javascript">
+          function paper1_start() {
+            document.getElementById('paper1_image').style.opacity = "1";
+          }
+
+          function paper1_stop() {
+            document.getElementById('paper1_image').style.opacity = "0";
+          }
+          paper1_stop()
+        </script>
+      </td>
+      <td style="padding:8px;width:80%;vertical-align:middle">
+        <a href="https://arxiv.org/abs/2504.08473">
+          <span class="papertitle"><b>Cut-and-splat</b>: Leveraging gaussian splatting for synthetic data generation</span>
+        </a>
+        <br>
+        Bram Vanherle,
+        <strong>Brent Zoomers</strong>, 
+        Jeroen Put, 
+        Frank Van Reeth, 
+        Nick Michiels
+        <br>
+        <i>ROBOVIS, 2025 <span style="color: red;">Best Paper Award</span></i><br>
+       
+     
+        <a href="https://arxiv.org/abs/2504.08473">arXiv</a>
+        /
+        <a href="https://zenodo.org/records/15516933">code</a>
+        <p></p>
+        <p>
+          Synthetic data generation using 3D Gaussian Splatting by pasting 3DGS objects into custom environments.
+
+        </p>
+      </td>
+    </tr>
+
+
+    
+
+     <tr onmouseout="paper1_stop()" onmouseover="paper1_start()" bgcolor="#ffffff">
+      <td style="padding:16px;width:20%;vertical-align:middle">
+        <div class="one">
+          <div class="two" id='paper1_image'>
+            <!-- If you have a video preview, uncomment the video tag and remove the first img -->
+            <!--
+            <video width=100% height=100% muted autoplay loop>
+              <source src="images/paper1_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            -->
+            <img src='./images/025.png' width=100%>
+          </div>
+          <img src='./images/r.png' width=100%>
+        </div>
+        <script type="text/javascript">
+          function paper1_start() {
+            document.getElementById('paper1_image').style.opacity = "1";
+          }
+
+          function paper1_stop() {
+            document.getElementById('paper1_image').style.opacity = "0";
+          }
+          paper1_stop()
+        </script>
+      </td>
+      <td style="padding:8px;width:80%;vertical-align:middle">
+        <a href="https://arxiv.org/abs/2502.11618">
+          <span class="papertitle">Projector-camera calibration with non-overlapping fields of view using a planar mirror</span>
+        </a>
+        <br>
+        Joni Vanherck, 
+        Lode Jorissen, 
+        <strong>Brent Zoomers</strong>, 
+        Nick Michiels
+        <br>
+        (*=equal contribution)
+        <br>
+        <i>Virtual Reality, 2025</i><br>
+        <a href="https://link.springer.com/article/10.1007/s10055-024-01089-7">Springer</a>
+        <p></p>
+        <p>
+          Calibration of projecter and camera using planar mirror
+
+        </p>
+      </td>
+    </tr>
+
+     <tr onmouseout="paper1_stop()" onmouseover="paper1_start()" bgcolor="#ffffff">
+      <td style="padding:16px;width:20%;vertical-align:middle">
+        <div class="one">
+          <div class="two" id='paper1_image'>
+            <!-- If you have a video preview, uncomment the video tag and remove the first img -->
+            <!--
+            <video width=100% height=100% muted autoplay loop>
+              <source src="images/paper1_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            -->
+            <img src='./images/large_area.jpg' width=100%>
+          </div>
+          <img src='./images/large_area.jpg' width=100%>
+        </div>
+        <script type="text/javascript">
+          function paper1_start() {
+            document.getElementById('paper1_image').style.opacity = "1";
+          }
+
+          function paper1_stop() {
+            document.getElementById('paper1_image').style.opacity = "0";
+          }
+          paper1_stop()
+        </script>
+      </td>
+      <td style="padding:8px;width:80%;vertical-align:middle">
+        <a href="https://link.springer.com/chapter/10.1007/978-3-031-71707-9_3">
+          <span class="papertitle">Large-Area Spatially Aligned Anchors</span>
+        </a>
+        <br>
+        Joni Vanherck, 
+        Lode Jorissen, 
+        <strong>Brent Zoomers</strong>, 
+        Nick Michiels
+        <br>
+        <i>XR Salento, 2024</i><br>
+        <a href="https://link.springer.com/chapter/10.1007/978-3-031-71707-9_3">Springer</a>
+        <p></p>
+        <p>
+          Acurate tracking in large-environments using spatial anchors
+
+        </p>
+      </td>
+    </tr>
+
+     <tr onmouseout="paper1_stop()" onmouseover="paper1_start()" bgcolor="#ffffff">
+      <td style="padding:16px;width:20%;vertical-align:middle">
+        <div class="one">
+          <div class="two" id='paper1_image'>
+            <!-- If you have a video preview, uncomment the video tag and remove the first img -->
+            <!--
+            <video width=100% height=100% muted autoplay loop>
+              <source src="images/paper1_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            -->
+            <img src='./images/brains.jpg' width=100%>
+          </div>
+          <img src='./images/brains.jpg' width=100%>
+        </div>
+        <script type="text/javascript">
+          function paper1_start() {
+            document.getElementById('paper1_image').style.opacity = "1";
+          }
+
+          function paper1_stop() {
+            document.getElementById('paper1_image').style.opacity = "0";
+          }
+          paper1_stop()
+        </script>
+      </td>
+      <td style="padding:8px;width:80%;vertical-align:middle">
+        <a href="https://arxiv.org/abs/2502.11618">
+          <span class="papertitle">Brains Over Brawn: Small AI Labs in the Age of Datacenter-Scale Compute</span>
+        </a>
+        <br>
+        Jeroen Put, 
+        Nick Michiels, 
+        Bram Vanherle, 
+        <strong>Brent Zoomers</strong>
+        <br>
+        <i>DeLTA, 2024</i><br>
+        <a href="https://link.springer.com/chapter/10.1007/978-3-031-66705-3_2">Springer</a>
+        <p></p>
+        <p>
+          Position paper on the future of small AI labs
+
+        </p>
+      </td>
+    </tr>
+
+     <tr onmouseout="paper1_stop()" onmouseover="paper1_start()" bgcolor="#ffffd0">
+      <td style="padding:16px;width:20%;vertical-align:middle">
+        <div class="one">
+          <div class="two" id='paper1_image'>
+            <!-- If you have a video preview, uncomment the video tag and remove the first img -->
+            <!--
+            <video width=100% height=100% muted autoplay loop>
+              <source src="images/paper1_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            -->
+            <img src='./images/mapr.jpg' width=100%>
+          </div>
+          <img src='./images/mapr.jpg' width=100%>
+        </div>
+        <script type="text/javascript">
+          function paper1_start() {
+            document.getElementById('paper1_image').style.opacity = "1";
+          }
+
+          function paper1_stop() {
+            document.getElementById('paper1_image').style.opacity = "0";
+          }
+          paper1_stop()
+        </script>
+      </td>
+      <td style="padding:8px;width:80%;vertical-align:middle">
+        <a href="https://documentserver.uhasselt.be/handle/1942/41266">
+          <span class="papertitle">Incorporating view-dependent effects into point clouds (Master's Thesis)</span>
+        </a>
+        <br>
+        <strong>Brent Zoomers</strong>
+         <br>
+        <i>2023</i>
+        <br>
+        <a href="https://documentserver.uhasselt.be/handle/1942/41266">Link</a>
+        <p></p>
+        <p>
+          OpenGL implementation of an Unstructure lumigraph-inspired approach to render view-dependent effects in real-time for point clouds.
+        </p>
+      </td>
+    </tr>
+
+     <tr onmouseout="paper1_stop()" onmouseover="paper1_start()" bgcolor="#ffffd0">
+      <td style="padding:16px;width:20%;vertical-align:middle">
+        <div class="one">
+          <div class="two" id='paper1_image'>
+            <!-- If you have a video preview, uncomment the video tag and remove the first img -->
+            <!--
+            <video width=100% height=100% muted autoplay loop>
+              <source src="images/paper1_video.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            -->
+            <img src='./images/slfrender.jpg' width=100%>
+          </div>
+          <img src='./images/slfrender.jpg' width=100%>
+        </div>
+        <script type="text/javascript">
+          function paper1_start() {
+            document.getElementById('paper1_image').style.opacity = "1";
+          }
+
+          function paper1_stop() {
+            document.getElementById('paper1_image').style.opacity = "0";
+          }
+          paper1_stop()
+        </script>
+      </td>
+      <td style="padding:8px;width:80%;vertical-align:middle">
+        <a href="https://arxiv.org/abs/2502.11618">
+          <span class="papertitle">Adaptive streaming and rendering of static light fields in the web browser</span>
+        </a>
+        <br>
+        Hendrik Lievens, 
+        Maarten Wijnants, 
+        <strong>Brent Zoomers</strong>, 
+        Jeroen Put, 
+        Nick Michiels, 
+        Peter Quax, 
+        Wim Lamotte
+        <br>
+        <i>IC3D, 2021</i><br>
+        <a href="https://ieeexplore.ieee.org/document/9687239">IEEEXplore</a>
+        <p></p>
+        <p>
+         Static light-field rendering in browser
 
         </p>
       </td>

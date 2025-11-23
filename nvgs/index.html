@@ -46,32 +46,32 @@
             <ul class="list-inline">
                 <li>
                     <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
-                        Brent Zoomers<sup>1</sup>
+                        <a href="https://brent-zoomers.github.io/">Brent Zoomers</a><sup>1</sup>
                     </p>
                 </li>
                 <li>
                     <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
-                        Florian Hahlbohm<sup>2</sup>
+                        <a href="https://fhahlbohm.github.io/">Florian Hahlbohm</a><sup>2</sup>
                     </p>
                 </li>
                 <li>
                     <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
-                        Joni Vanherck<sup>1</sup>
+                        <a href="https://scholar.google.fr/citations?user=z5LtNhIAAAAJ&hl=fr">Joni Vanherck</a><sup>1</sup>
                     </p>
                 </li>
                 <li>
                     <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
-                        Lode Jorissen<sup>1</sup>
+                        <a href="https://www.ljorissen.be/">Lode Jorissen</a><sup>1</sup>
                     </p>
                 </li>
                 <li>
                     <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
-                        Marcus Magnor<sup>2</sup>
+                        <a href="https://graphics.tu-bs.de/people/magnor">Marcus Magnor</a><sup>2</sup>
                     </p>
                 </li>
                 <li>
                     <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
-                        Nick Michiels<sup>1</sup>
+                        <a href="https://www.uhasselt.be/nl/wie-is-wie/nick-michiels">Nick Michiels</a><sup>1</sup>
                     </p>
                 </li>
             </ul>
@@ -105,14 +105,20 @@
                 </div>
         </div>
 
-
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <image src="img/bfc.png" class="img-responsive" alt="overview"><br>  
+                <p><b>Our approach allows us to cull occluded Gaussians by utilizing a lightweight MLP to store visibility data.
+                This allows us to avoid any preprocessing on Gaussians predicted as ocludded with little to no impact on visual quality.
+                </b></p>  
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>
                     Abstract
                 </h3>
-                <image src="img/bfc.png" class="img-responsive" alt="overview"><br>
                 <p class="text-justify">
                 3D Gaussian Splatting can exploit frustum culling and level-
                 of-detail strategies to accelerate rendering of scenes con-
@@ -143,10 +149,28 @@
                 <h3>
                     Video
                 </h3>
-                <div class="text-center">
-                     <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/Main Video.mp4" type="video/mp4" />
-                </video>
+                <!-- Video Comparison Slider -->
+                <div class="video-compare-container" id="comparisonContainer">
+                    
+                    <!-- Video 1 (The "After" or Right side) -->
+                    <video class="video-base" id="videoRight" autoplay loop muted playsinline>
+                        <source src="img/Main Video.mp4" type="video/mp4">
+                    </video>
+
+                    <!-- Video 2 (The "Before" or Left side) - Wrapped for clipping -->
+                    <div class="video-clipper" id="videoClipper">
+                        <video class="video-overlay" id="videoLeft" autoplay loop muted playsinline>
+                            <!-- NOTE: This video must have exact same resolution/length as the other -->
+                            <source src="img/Main Video.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <!-- The Slider Handle -->
+                    <input type="range" min="0" max="100" value="50" class="slider" id="sliderRange">
+                    
+                    <!-- Optional Labels -->
+                    <div class="slider-label label-left">Ours</div>
+                    <div class="slider-label label-right">Baseline</div>
                 </div>
             </div>
         </div>
@@ -197,8 +221,11 @@
                     A combination of the instanced rasterizer and our visibilty culling MLP allows us to drastically reduce VRAM usage, while keeping quality and FPS high for large-scale scenes.
                     Combining our method with LoD approaches suitable for further distances can, similarly to meshes, prove to be a powerful tool for creating large-scale worlds using 3DGS.
                 </p>                
-                <br>
-              
+                <image src="img/comparison.jpg" class="img-responsive" alt="overview"><br>
+                <p><b>Our approach allows for fast rendering speeds with little to no impact on visual quality</b></p> 
+                <image src="img/table.jpg" class="img-responsive" alt="overview"><br> 
+                <p><b>And it uses significantly less VRAM than other approaches due to a combination of our instanced rasterizer and occlusion MLP</b></p> 
+                 
             </div>
         </div>
 
