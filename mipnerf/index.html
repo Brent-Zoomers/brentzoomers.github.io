@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>mip-NeRF</title>
+    <title>NVGS</title>
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,55 +53,56 @@
     <div class="container" id="main">
         <div class="row">
             <h2 class="col-md-12 text-center">
-                <b>Mip-NeRF</b>: A Multiscale Representation <br> for Anti-Aliasing Neural Radiance Fields</br> 
+                <b>NVGS</b>: Neural Visibility for Occlusion Culling in <br>3D Gaussian Splatting
                 <small>
-                    ICCV 2021 (Oral, Best Paper Honorable Mention)
+                    
                 </small>
             </h2>
         </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <ul class="list-inline">
-                    <li>
-                        <a href="https://jonbarron.info/">
-                          Jonathan T. Barron
-                        </a>
-                        </br>Google
-                    </li>
-                    <li>
-                        <a href="http://bmild.github.io/">
-                            Ben Mildenhall
-                        </a>
-                        </br>Google
-                    </li>
-                    <li>
-                        <a href="http://matthewtancik.com/">
-                          Matthew Tancik
-                        </a>
-                        </br>UC Berkeley
-                    </li><br>
-                    <li>
-                        <a href="https://phogzone.com/">
-                          Peter Hedman
-                        </a>
-                        </br>Google
-                    </li>
-                    <li>
-                        <a href="http://www.ricardomartinbrualla.com/">
-                          Ricardo Martin-Brualla
-                        </a>
-                        </br>Google
-                    </li>
-                    <li>
-                        <a href="https://pratulsrinivasan.github.io/">
-                          Pratul P. Srinivasan
-                        </a>
-                        </br>Google
-                    </li>
-                </ul>
+       <div class="row">
+        <div class="col-md-12 text-center">
+            <ul class="list-inline">
+                <li>
+                    <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
+                        Brent Zoomers<sup>1</sup>
+                    </p>
+                </li>
+                <li>
+                    <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
+                        Florian Hahlbohm<sup>2</sup>
+                    </p>
+                </li>
+                <li>
+                    <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
+                        Joni Vanherck<sup>1</sup>
+                    </p>
+                </li>
+                <li>
+                    <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
+                        Lode Jorissen<sup>1</sup>
+                    </p>
+                </li>
+                <li>
+                    <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
+                        Marcus Magnor<sup>2</sup>
+                    </p>
+                </li>
+                <li>
+                    <p style="font-size: 18px; font-weight: bold; margin-bottom: 0;">
+                        Nick Michiels<sup>1</sup>
+                    </p>
+                </li>
+            </ul>
+            
+            <!-- Affiliation Definitions -->
+            <div style="margin-top: 10px;">
+                <p style="font-size: 16px;">
+                    <sup>1</sup>Hasselt University (Digital Future Lab) &nbsp;&nbsp;&nbsp;&nbsp; 
+                    <sup>2</sup>TU Braunschweig (Computer Graphics Lab)
+                </p>
             </div>
         </div>
-
+    </div>
 
         <div class="row">
                 <div class="col-md-4 col-md-offset-4 text-center">
@@ -121,7 +122,7 @@
                         <li>
                             <a href="https://github.com/google/mipnerf">
                             <image src="img/github.png" height="60px">
-                                <h4><strong>Code</strong></h4>
+                                <h4><strong>Code (Released Soon)</strong></h4>
                             </a>
                         </li>
                     </ul>
@@ -135,11 +136,26 @@
                 <h3>
                     Abstract
                 </h3>
-                <image src="img/rays.png" class="img-responsive" alt="overview"><br>
+                <image src="img/bfc.png" class="img-responsive" alt="overview"><br>
                 <p class="text-justify">
-The rendering procedure used by neural radiance fields (NeRF) samples a scene with a single ray per pixel and may therefore produce renderings that are excessively blurred or aliased when training or testing images observe scene content at different resolutions. The straightforward solution of supersampling by rendering with multiple rays per pixel is impractical for NeRF, because rendering each ray requires querying a multilayer perceptron hundreds of times. Our solution, which we call "mip-NeRF" (à la "mipmap"), extends NeRF to represent the scene at a continuously-valued scale.
-By efficiently rendering anti-aliased conical frustums instead of rays, mip-NeRF reduces objectionable aliasing artifacts and significantly improves NeRF's ability to represent fine details, while also being 7% faster than NeRF and half the size.
-Compared to NeRF, mip-NeRF reduces average error rates by 17% on the dataset presented with NeRF and by 60% on a challenging multiscale variant of that dataset that we present. mip-NeRF is also able to match the accuracy of a brute-force supersampled NeRF on our multiscale dataset while being 22x faster.
+                3D Gaussian Splatting can exploit frustum culling and level-
+                of-detail strategies to accelerate rendering of scenes con-
+                taining a large number of primitives. However, the semi-
+                transparent nature of Gaussians prevents the application of
+                another highly effective technique: occlusion culling. We ad-
+                dress this limitation by proposing a novel method to learn the
+                viewpoint-dependent visibility function of all Gaussians in a
+                trained model using a small, shared MLP across instances
+                of an asset in a scene. By querying it for Gaussians within
+                the viewing frustum prior to rasterization, our method can
+                discard occluded primitives during rendering. Leveraging
+                Tensor Cores for efficient computation, we integrate these
+                neural queries directly into a novel instanced software ras-
+                terizer. Our approach outperforms the current state of the
+                art for composed scenes in terms of VRAM usage and image
+                quality, utilizing a combination of our instanced rasterizer
+                and occlusion culling MLP, and exhibits complementary
+                properties to existing LoD techniques.
                 </p>
             </div>
         </div>
@@ -153,7 +169,7 @@ Compared to NeRF, mip-NeRF reduces average error rates by 17% on the dataset pre
                 </h3>
                 <div class="text-center">
                     <div style="position:relative;padding-top:56.25%;">
-                        <iframe src="https://www.youtube.com/embed/EpH175PY1A0" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+                        <iframe src="img/main_video.mp4" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
                     </div>
                 </div>
             </div>
@@ -163,31 +179,18 @@ Compared to NeRF, mip-NeRF reduces average error rates by 17% on the dataset pre
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>
-                    Integrated Positional Encoding
+                    Neural Visibility Culling
                 </h3>
                 <p class="text-justify">
-                    Typical positional encoding (as used in Transformer networks and Neural Radiance Fields) maps a single point in space to a feature vector, where each element is generated by a sinusoid with an exponentially increasing frequency:
-                </p>
-                <p style="text-align:center;">
-                    <image src="img/pe_seq_eqn_pad.png" height="50px" class="img-responsive">
-                </p>
-                <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/pe_anim_horiz.mp4" type="video/mp4" />
-                </video>
-                <p class="text-justify">
-                    Here, we show how these feature vectors change as a function of a point moving in 1D space.
-                    <br><br>
-                    Our <em>integrated positional encoding</em> considers Gaussian <em>regions</em> of space, rather than infinitesimal points. This provides a natural way to input a "region" of space as query to a coordinate-based neural network, allowing the network to reason about sampling and aliasing. The expected value of each positional encoding component has a simple closed form:
-                </p>
-                <p style="text-align:center;">
-                    <image src="img/ipe_eqn_under_pad.png" height="30px" class="img-responsive">
+                   3D Gaussian Splatting uses alpha blending to calculate the final per-pixel color. To achieve this however, all Gaussians in frustum have to be passed in order to calculate their color and opacity.
+                   This includes a large portion of Gaussians which in the end will have no contribution to the rendered image, hence in this work we bake Gaussian visibility into a lightweight MLP and show that We
+                   can use this to avoid unecessary preprocessing. Visibility is determined by considering the contribution of a Gaussian to a view. Due to transmittance being saturated effectively limiting this number,
+                   we can discard a significant number of Gaussians this way. By discarding Gaussians, we also enable methods that have higher per-Gaussian costs to become more effective as we avoid this preprocessing altogether.
+
                 </p>
                 <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/ipe_anim_horiz.mp4" type="video/mp4" />
+                  <source src="" type="video/mp4" />
                 </video>
-                <p class="text-justify">
-                    We can see that when considering a wider region, the higher frequency features automatically shrink toward zero, providing the network with lower-frequency inputs. As the region narrows, these features converge to the original positional encoding.
-                </p>
             </div>
         </div>
             
@@ -196,16 +199,12 @@ Compared to NeRF, mip-NeRF reduces average error rates by 17% on the dataset pre
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>
-                    Mip-NeRF
+                    Instanced Rasterizer
                 </h3>
                 <p class="text-justify">
-                    We use integrated positional encoding to train NeRF to generate anti-aliased renderings. Rather than casting an infinitesimal ray through each pixel, we instead cast a full 3D <em>cone</em>. For each queried point along a ray, we consider its associated 3D conical frustum. Two different cameras viewing the same point in space may result in vastly different conical frustums, as illustrated here in 2D:
-                </p>
-                <p style="text-align:center;">
-                    <image src="img/scales_toy.png" class="img-responsive" alt="scales">
-                </p>
-                <p class="text-justify">
-                    In order to pass this information through the NeRF network, we fit a multivariate Gaussian to the conical frustum and use the integrated positional encoding described above to create the input feature vector to the network. 
+                    Besides the MLP, we introduce a novel instanced rasterizer tailored for 3DGS. We only instantiate a Gaussian after it has survived near-plane, frustum, and visibility culling.
+                    This allows us to drastically reduce VRAM compared to baseline 3DGS, or state of the art methods for composed scenes. Our rasterizer can render a combination of neural-visibility enabled assets
+                    and normal 3DGS assets, enabling flexible usage for creators.
                 </p>
             </div>
         </div>
@@ -218,32 +217,20 @@ Compared to NeRF, mip-NeRF reduces average error rates by 17% on the dataset pre
                     Results
                 </h3>
                 <p class="text-justify">
-                    We train NeRF and mip-NeRF on a dataset with images at four different resolutions. Normal NeRF (left) is not capable of learning to represent the same scene at multiple levels of detail, with blurring in close-up shots and aliasing in low resolution views, while mip-NeRF (right) both preserves sharp details in close-ups and correctly renders the zoomed-out images.
+                    A combination of the instanced rasterizer and our visibilty culling MLP allows us to drastically reduce VRAM usage, while keeping quality and FPS high for large-scale scenes.
+                    Combining our method with LoD approaches suitable for further distances can, similarly to meshes, prove to be a powerful tool for creating large-scale worlds using 3DGS.
                 </p>                
                 <br>
                 <video id="v0" width="100%" autoplay loop muted controls>
                   <source src="img/ship_sbs_path1.mp4" type="video/mp4" />
                 </video>
-                <video id="v0" width="100%" autoplay loop muted controls>
-                  <source src="img/chair_sbs_path1.mp4" type="video/mp4" />
-                </video>
-                <video id="v0" width="100%" autoplay loop muted controls>
-                  <source src="img/lego_sbs_path1.mp4" type="video/mp4" />
-                </video>
-                <video id="v0" width="100%" autoplay loop muted controls>
-                  <source src="img/mic_sbs_path1.mp4" type="video/mp4" />
-                </video>
-                <br><br>
-                <p class="text-justify">
-                    We can also manipulate the integrated positional encoding by using a larger or smaller radius than the true pixel footprint, exposing the continuous level of detail learned within a single network:
-                </p>     
-                <video id="v0" width="100%" autoplay loop muted controls>
-                  <source src="img/lego_radii_manip_slider_200p.mp4" type="video/mp4" />
-                </video>
+               
+                  
+              
             </div>
         </div>
 
-
+<!-- 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>
@@ -268,7 +255,7 @@ Compared to NeRF, mip-NeRF reduces average error rates by 17% on the dataset pre
                     Mip-NeRF was implemented on top of the <a href="https://github.com/google-research/google-research/tree/master/jaxnerf">JAXNeRF</a> codebase.
                 </p>
             </div>
-        </div>
+        </div> -->
         
             
         <div class="row">
@@ -278,33 +265,24 @@ Compared to NeRF, mip-NeRF reduces average error rates by 17% on the dataset pre
                 </h3>
                 <div class="form-group col-md-10 col-md-offset-1">
                     <textarea id="bibtex" class="form-control" readonly>
-@article{barron2021mipnerf,
-    title={Mip-NeRF: A Multiscale Representation 
-           for Anti-Aliasing Neural Radiance Fields},
-    author={Jonathan T. Barron and Ben Mildenhall and 
-            Matthew Tancik and Peter Hedman and 
-            Ricardo Martin-Brualla and Pratul P. Srinivasan},
-    journal={ICCV},
-    year={2021}
-}</textarea>
+                    Coming
+                    </textarea>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    Acknowledgements
-                </h3>
-                <p class="text-justify">
-                We thank Janne Kontkanen and David Salesin for their comments on the text, Paul Debevec for constructive discussions, and Boyang Deng for JaxNeRF. 
-                    <br>
-                MT is funded by an NSF Graduate Fellowship.
-                    <br>
-                The website template was borrowed from <a href="http://mgharbi.com/">Michaël Gharbi</a>.
-                </p>
-            </div>
-        </div>
+    <div class="col-md-8 col-md-offset-2">
+        <h3>
+            Acknowledgements
+        </h3>
+        <p class="text-justify">
+            This research was partly funded by the FWO fellowship grants (1SHDZ24N, 1S80926N), the Special Research Fund (BOF) of Hasselt University (R-14360, R-14436), the NORM.AI SBO project, the DFG project “Real-Action VR” (ID 523421583), and the Flanders Make’s XRTWin SBO project (R-12528). This work was made possible with the support of MAXVR-INFRA, a scalable and flexible infrastructure that facilitates the transition to digital-physical work environments.
+            <br><br>
+            The website template was borrowed from <a href="https://jonbarron.info/">Jon Barron</a>, who adopted it from <a href="http://mgharbi.com/">Michaël Gharbi</a>.
+        </p>
+    </div>
+</div>
     </div>
 </body>
 </html>
