@@ -108,8 +108,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <image src="img/bfc.png" class="img-responsive" alt="overview"><br>  
-                <p><b>Our approach allows us to cull occluded Gaussians by utilizing a lightweight MLP to store visibility data.
-                This allows us to avoid any preprocessing on Gaussians predicted as ocludded with little to no impact on visual quality.
+                <p><b>Backface culling for 3DGS
                 </b></p>  
             </div>
         </div>
@@ -121,10 +120,9 @@
                 </h3>
                 <p class="text-justify">
                 3D Gaussian Splatting can exploit frustum culling and level-
-                of-detail strategies to accelerate rendering of scenes con-
-                taining a large number of primitives. However, the semi-
-                transparent nature of Gaussians prevents the application of
-                another highly effective technique: occlusion culling. We ad-
+                of-detail strategies to accelerate rendering of scenes containing a large number of primitives. 
+                However, the semitransparent nature of Gaussians prevents the application of
+                another highly effective technique: occlusion culling. We ad
                 dress this limitation by proposing a novel method to learn the
                 viewpoint-dependent visibility function of all Gaussians in a
                 trained model using a small, shared MLP across instances
@@ -132,11 +130,9 @@
                 the viewing frustum prior to rasterization, our method can
                 discard occluded primitives during rendering. Leveraging
                 Tensor Cores for efficient computation, we integrate these
-                neural queries directly into a novel instanced software ras-
-                terizer. Our approach outperforms the current state of the
-                art for composed scenes in terms of VRAM usage and image
-                quality, utilizing a combination of our instanced rasterizer
-                and occlusion culling MLP, and exhibits complementary
+                neural queries directly into a novel instanced software rasterizer. 
+                Our approach outperforms the current state of the art for composed scenes in terms of VRAM usage and image
+                quality, utilizing a combination of our instanced rasterizer and occlusion culling MLP, and exhibits complementary
                 properties to existing LoD techniques.
                 </p>
             </div>
@@ -146,31 +142,60 @@
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    Video
-                </h3>
-                <!-- Video Comparison Slider -->
-                <div class="video-compare-container" id="comparisonContainer">
-                    
-                    <!-- Video 1 (The "After" or Right side) -->
-                    <video class="video-base" id="videoRight" autoplay loop muted playsinline>
-                        <source src="img/Main Video.mp4" type="video/mp4">
-                    </video>
+                <h3>Video Comparison</h3>
+                <b>Gaussians that are not used in the first frame of each scene are shown in red</b>
+                <!-- BUTTONS -->
+                <div class="text-center" style="margin-bottom: 20px;">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" onclick="window.switchScene('scene1', this)">Crowd</button>
+                        <button type="button" class="btn btn-default" onclick="window.switchScene('scene2', this)">Forest</button>
+                        <button type="button" class="btn btn-default" onclick="window.switchScene('scene3', this)">DonutSea</button>
+                    </div>
+                </div>
 
-                    <!-- Video 2 (The "Before" or Left side) - Wrapped for clipping -->
-                    <div class="video-clipper" id="videoClipper">
-                        <video class="video-overlay" id="videoLeft" autoplay loop muted playsinline>
-                            <!-- NOTE: This video must have exact same resolution/length as the other -->
-                            <source src="img/Main Video.mp4" type="video/mp4">
+                <!-- SCENE 1 -->
+                <div class="video-compare-container  tab-scene" id="scene1">
+                    <video class="video-base" autoplay muted playsinline>
+                        <source src="img/crowd_pred.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-clipper">
+                        <video class="video-overlay" autoplay muted playsinline>
+                            <source src="img/crowd_gt.mp4" type="video/mp4">
                         </video>
                     </div>
+                    <input type="range" min="0" max="100" value="50" class="slider">
+                    <div class="slider-label label-left">Render</div>
+                    <div class="slider-label label-right">Culled</div>
+                </div>
 
-                    <!-- The Slider Handle -->
-                    <input type="range" min="0" max="100" value="50" class="slider" id="sliderRange">
-                    
-                    <!-- Optional Labels -->
-                    <div class="slider-label label-left">Ours</div>
-                    <div class="slider-label label-right">Baseline</div>
+                <!-- SCENE 2 -->
+                <div class="video-compare-container  tab-scene" id="scene2" style="display: none;">
+                    <video class="video-base" autoplay muted playsinline>
+                        <source src="img/forest_pred.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-clipper">
+                        <video class="video-overlay" autoplay muted playsinline>
+                            <source src="img/forest_gt.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider">
+                    <div class="slider-label label-left">Render</div>
+                    <div class="slider-label label-right">Culled</div>
+                </div>
+
+                <!-- SCENE 3 -->
+                <div class="video-compare-container  tab-scene" id="scene3" style="display: none;">
+                    <video class="video-base" autoplay muted playsinline>
+                        <source src="img/donutsea_pred.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-clipper">
+                        <video class="video-overlay" autoplay muted playsinline>
+                            <source src="img/donutsea_gt.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <input type="range" min="0" max="100" value="50" class="slider">
+                    <div class="slider-label label-left">Render</div>
+                    <div class="slider-label label-right">Culled</div>
                 </div>
             </div>
         </div>
@@ -186,15 +211,201 @@
                    This includes a large portion of Gaussians which in the end will have no contribution to the rendered image, hence in this work we bake Gaussian visibility into a lightweight MLP and show that We
                    can use this to avoid unecessary preprocessing. Visibility is determined by considering the contribution of a Gaussian to a view. Due to transmittance being saturated effectively limiting this number,
                    we can discard a significant number of Gaussians this way. By discarding Gaussians, we also enable methods that have higher per-Gaussian costs to become more effective as we avoid this preprocessing altogether.
-
                 </p>
-                <video id="v0" width="100%" autoplay loop muted>
-                  <source src="img/asset_mp4.mp4" type="video/mp4" />
-                </video>
             </div>
         </div>
-            
+        
+<!-- SEPARATE GRID SECTION -->
+<div class="row" style="margin-top: 50px;">
+    <div class="col-md-8 col-md-offset-2">
+        <h3>Asset Library</h3>
+   
 
+    <!-- MAIN CONTAINER -->
+    <div style="position: relative; margin-top: 20px;">
+        
+        <!-- LEFT BUTTON -->
+        <button class="carousel-btn btn-left" onclick="moveCarousel(-1)">
+            <i class="fa fa-chevron-left"></i>
+        </button>
+        <!-- RIGHT BUTTON -->
+        <button class="carousel-btn btn-right" onclick="moveCarousel(1)">
+            <i class="fa fa-chevron-right"></i>
+        </button>
+
+        <!-- CAROUSEL VIEWPORT (The Mask) -->
+        <div class="carousel-viewport">
+            
+            <!-- CAROUSEL TRACK (The Slider) -->
+            <div class="carousel-track" id="track">
+                
+                <!-- Item 1: Donut -->
+                <div class="grid-item">
+                    <div class="video-compare-container">
+                        <video class="video-base" autoplay muted playsinline>
+                            <source src="img/assets/Donut(1).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-clipper">
+                            <video class="video-overlay" autoplay muted playsinline>
+                                <source src="img/assets/Donut.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider">
+                        <div class="slider-label label-left">Render</div>
+                        <div class="slider-label label-right">Culled</div>
+                    </div>
+                    <p class="text-center"><b>Donut</b></p>
+                </div>
+
+                <!-- Item 2: Bonsai -->
+                <div class="grid-item">
+                    <div class="video-compare-container">
+                        <video class="video-base" autoplay muted playsinline>
+                            <source src="img/assets/Bonsai(1).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-clipper">
+                            <video class="video-overlay" autoplay muted playsinline>
+                                <source src="img/assets/Bonsai.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider">
+                        <div class="slider-label label-left">Render</div>
+                        <div class="slider-label label-right">Culled</div>
+                    </div>
+                    <p class="text-center"><b>Bonsai</b></p>
+                </div>
+
+                <!-- Item 3: Oak -->
+                <div class="grid-item">
+                    <div class="video-compare-container">
+                        <video class="video-base" autoplay muted playsinline>
+                            <source src="img/assets/Oak(1).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-clipper">
+                            <video class="video-overlay" autoplay muted playsinline>
+                                <source src="img/assets/Oak.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider">
+                        <div class="slider-label label-left">Render</div>
+                        <div class="slider-label label-right">Culled</div>
+                    </div>
+                    <p class="text-center"><b>Oak</b></p>
+                </div>
+
+                <!-- Item 4: Pine -->
+                <div class="grid-item">
+                    <div class="video-compare-container">
+                        <video class="video-base" autoplay muted playsinline>
+                            <source src="img/assets/Pine(1).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-clipper">
+                            <video class="video-overlay" autoplay muted playsinline>
+                                <source src="img/assets/Pine.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider">
+                        <div class="slider-label label-left">Render</div>
+                        <div class="slider-label label-right">Culled</div>
+                    </div>
+                    <p class="text-center"><b>Pine</b></p>
+                </div>
+
+                <!-- Item 5: Fall -->
+                <div class="grid-item">
+                    <div class="video-compare-container">
+                        <video class="video-base" autoplay muted playsinline>
+                            <source src="img/assets/Fall(1).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-clipper">
+                            <video class="video-overlay" autoplay muted playsinline>
+                                <source src="img/assets/Fall.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider">
+                        <div class="slider-label label-left">Render</div>
+                        <div class="slider-label label-right">Culled</div>
+                    </div>
+                    <p class="text-center"><b>Fall</b></p>
+                </div>
+
+                <!-- Item 6: 100837 -->
+                <div class="grid-item">
+                    <div class="video-compare-container">
+                        <video class="video-base" autoplay muted playsinline>
+                            <source src="img/assets/100837(1).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-clipper">
+                            <video class="video-overlay" autoplay muted playsinline>
+                                <source src="img/assets/100837.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider">
+                        <div class="slider-label label-left">Render</div>
+                        <div class="slider-label label-right">Culled</div>
+                    </div>
+                    <p class="text-center"><b>100837</b></p>
+                </div>
+
+                <!-- Item 7: 100831 -->
+                <div class="grid-item">
+                    <div class="video-compare-container">
+                        <video class="video-base" autoplay muted playsinline>
+                            <source src="img/assets/100831(1).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-clipper">
+                            <video class="video-overlay" autoplay muted playsinline>
+                                <source src="img/assets/100831.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider">
+                        <div class="slider-label label-left">Render</div>
+                        <div class="slider-label label-right">Culled</div>
+                    </div>
+                    <p class="text-center"><b>100831</b></p>
+                </div>
+
+                <!-- Item 8: 100833 -->
+                <div class="grid-item">
+                    <div class="video-compare-container">
+                        <video class="video-base" autoplay muted playsinline>
+                            <source src="img/assets/100833(1).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-clipper">
+                            <video class="video-overlay" autoplay muted playsinline>
+                                <source src="img/assets/100833.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider">
+                        <div class="slider-label label-left">Render</div>
+                        <div class="slider-label label-right">Culled</div>
+                    </div>
+                    <p class="text-center"><b>100833</b></p>
+                </div>
+
+                <!-- Item 9: 100843 -->
+                <div class="grid-item">
+                    <div class="video-compare-container">
+                        <video class="video-base" autoplay muted playsinline>
+                            <source src="img/assets/100843(1).mp4" type="video/mp4">
+                        </video>
+                        <div class="video-clipper">
+                            <video class="video-overlay" autoplay muted playsinline>
+                                <source src="img/assets/100843.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" class="slider">
+                        <div class="slider-label label-left">Render</div>
+                        <div class="slider-label label-right">Culled</div>
+                    </div>
+                    <p class="text-center"><b>100843</b></p>
+                </div>
+
+            </div> <!-- End Track -->
+        </div> <!-- End Viewport -->
+    </div>
+     </div>
+</div>
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">

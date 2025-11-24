@@ -158,86 +158,148 @@ span.highlight {
 	margin-right: 0.5em;
 }
 
-/* Container for the comparison */
+/* =========================================
+   VIDEO COMPARISON SLIDER STYLES
+   ========================================= */
+
+/* 1. Main Container */
 .video-compare-container {
     position: relative;
-    width: 100%;
+    width: 100%; /* Fills the Bootstrap column */
+    height: auto; /* Allows height to grow with video */
+    display: inline-block; /* Fixes layout in grids */
+    vertical-align: top;
     overflow: hidden;
-    margin-bottom: 20px; /* Spacing */
-    --position: 50%;
+    margin-bottom: 20px;
+    --position: 50%; /* Default JS variable fallback */
 }
 
-/* Both videos need to sit on top of each other */
-.video-base, .video-overlay {
+/* 2. The Base Video (Background / Right Side) */
+.video-base {
     width: 100%;
+    height: auto;
     display: block;
+    /* No special positioning needed, it dictates the container height */
 }
 
-/* The clipper div restricts the visibility of the top video */
+/* 3. The Clipper (The mask for the Left Side) */
 .video-clipper {
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
-    width: 50%; /* Default start position */
-    overflow: hidden;
-    border-right: 2px solid white; /* The white line separator */
-    z-index: 2;
+    width: 50%; /* JS will update this */
+    overflow: hidden; /* This cuts the video */
+    border-right: 2px solid white; /* The white separator line */
+    z-index: 10;
 }
 
-/* IMPORTANT: The top video inside the clipper must remain full width 
-   so it doesn't squish when we reduce the clipper width */
+/* 4. The Overlay Video (Left Side - Inside Clipper) */
 .video-overlay {
-    width: 200%; /* We adjust this via JS, but usually needs to match parent width */
-    max-width: none; /* Override bootstrap if needed */
+    /* CRITICAL: This video must be the width of the CONTAINER, not the clipper.
+       We set max-width: none so Bootstrap doesn't squash it. 
+       The JavaScript explicitly sets the pixel width to match the container. */
+    max-width: none !important; 
+    height: 100%;
+    display: block;
+    object-fit: cover; /* Ensures aspect ratio stays correct */
 }
 
-/* The interactive slider input (invisible but clickable) */
+/* 5. The Invisible Slider Input (The logic) */
 .slider {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0; /* Invisible */
-    cursor: ew-resize;
-    z-index: 3;
+    opacity: 0; /* Make it invisible */
+    cursor: col-resize; /* Cursor icon */
+    z-index: 30; /* Must be on TOP of everything to catch clicks */
     margin: 0;
 }
 
-/* Optional: Labels */
+/* 6. The Visual Handle (The Circle Icon) */
+.video-compare-container::after {
+    content: '\f07e'; /* FontAwesome Arrows */
+    font-family: 'FontAwesome'; 
+    position: absolute;
+    top: 50%;
+    /* Use the CSS variable updated by JS */
+    left: var(--position); 
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: white;
+    color: #333;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    pointer-events: none; /* Let clicks pass through to the .slider input */
+    z-index: 20; /* Above videos, below slider input */
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+
+/* 7. Optional Labels (Render / Culled) */
 .slider-label {
     position: absolute;
     bottom: 10px;
     color: white;
     background-color: rgba(0, 0, 0, 0.5);
-    padding: 5px 10px;
+    padding: 4px 8px;
     border-radius: 4px;
+    font-size: 12px;
     font-weight: bold;
     pointer-events: none;
-    z-index: 4;
+    z-index: 15;
 }
 .label-left { left: 10px; }
 .label-right { right: 10px; }
 
-/* Optional: A custom handle circle in the middle */
-.video-compare-container::after {
-    content: '\f07e'; /* FontAwesome resize icon or use text like '< >' */
-    font-family: 'FontAwesome'; 
+
+/* 1. The Mask (What you see) */
+.carousel-viewport {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    /* Optional: Add some padding if shadows get cut off */
+    padding: 10px 0; 
+}
+
+/* 2. The Track (The long strip of items) */
+.carousel-track {
+    display: flex;
+    flex-wrap: nowrap; /* Force single line */
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth 'Swipe' ease */
+    width: 100%;
+}
+
+/* 3. The Items (Force exactly 3 per view) */
+.carousel-track .grid-item {
+    /* 33.333% width means 3 items fit perfectly */
+    flex: 0 0 33.3333%; 
+    max-width: 33.3333%;
+    padding: 0 15px; /* Spacing between items */
+    display: block !important; /* Override any previous JS display:none */
+}
+
+/* Navigation Buttons (Same as before) */
+.carousel-btn {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+    border: none;
+    border-radius: 50%;
     width: 40px;
     height: 40px;
-    background: white;
-    color: #333;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 40px;
     font-size: 18px;
-    pointer-events: none; /* Click through to slider */
-    z-index: 4;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
-    left: var(--position);
+    cursor: pointer;
+    z-index: 100;
+    transition: 0.3s;
 }
+.carousel-btn:hover { background-color: #000; }
+.carousel-btn:disabled { opacity: 0.3; cursor: default; }
+.btn-left { left: 5px; }
+.btn-right { right: 5px; }
