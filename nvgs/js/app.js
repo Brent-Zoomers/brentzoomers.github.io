@@ -111,7 +111,7 @@ $(document).ready(function() {
 
 // --- CAROUSEL LOGIC (SLIDING) ---
 let currentIndex = 0;
-const itemsPerPage = 3; 
+const itemsPerPage = 2; 
 
 function moveCarousel(direction) {
     const track = document.getElementById('track');

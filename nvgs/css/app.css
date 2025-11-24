@@ -277,8 +277,8 @@ span.highlight {
 /* 3. The Items (Force exactly 3 per view) */
 .carousel-track .grid-item {
     /* 33.333% width means 3 items fit perfectly */
-    flex: 0 0 33.3333%; 
-    max-width: 33.3333%;
+    flex: 0 0 50%; 
+    max-width: 50%;
     padding: 0 15px; /* Spacing between items */
     display: block !important; /* Override any previous JS display:none */
 }
