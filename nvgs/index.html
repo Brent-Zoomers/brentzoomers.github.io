@@ -106,10 +106,9 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-8 col-md-offset-2 text-center">
                 <image src="img/bfc.png" class="img-responsive" alt="overview"><br>  
-                <p><b>Backface culling for 3DGS
-                </b></p>  
+                  <h3 class="text-success"><b>TL;DR: Backface culling for 3DGS.</b></h3>
             </div>
         </div>
 
@@ -121,9 +120,8 @@
                 <p class="text-justify">
                 3D Gaussian Splatting can exploit frustum culling and level-
                 of-detail strategies to accelerate rendering of scenes containing a large number of primitives. 
-                However, the semitransparent nature of Gaussians prevents the application of
-                another highly effective technique: occlusion culling. We ad
-                dress this limitation by proposing a novel method to learn the
+                However, the semi-transparent nature of Gaussians prevents the application of
+                another highly effective technique: occlusion culling. We address this limitation by proposing a novel method to learn the
                 viewpoint-dependent visibility function of all Gaussians in a
                 trained model using a small, shared MLP across instances
                 of an asset in a scene. By querying it for Gaussians within
@@ -208,7 +206,7 @@
                 </h3>
                 <p class="text-justify">
                    3D Gaussian Splatting uses alpha blending to calculate the final per-pixel color. To achieve this however, all Gaussians in frustum have to be passed in order to calculate their color and opacity.
-                   This includes a large portion of Gaussians which in the end will have no contribution to the rendered image, hence in this work we bake Gaussian visibility into a lightweight MLP and show that We
+                   This includes a large portion of Gaussians which in the end will have no contribution to the rendered image, hence in this work we bake Gaussian visibility into a lightweight MLP and show that we
                    can use this to avoid unecessary preprocessing. Visibility is determined by considering the contribution of a Gaussian to a view. Due to transmittance being saturated effectively limiting this number,
                    we can discard a significant number of Gaussians this way. By discarding Gaussians, we also enable methods that have higher per-Gaussian costs to become more effective as we avoid this preprocessing altogether.
                 </p>
@@ -414,7 +412,7 @@
                 </h3>
                 <p class="text-justify">
                     Besides the MLP, we introduce a novel instanced rasterizer tailored for 3DGS. We only instantiate a Gaussian after it has survived near-plane, frustum, and visibility culling.
-                    This allows us to drastically reduce VRAM compared to baseline 3DGS, or state of the art methods for composed scenes. Our rasterizer can render a combination of neural-visibility enabled assets
+                    This allows us to drastically reduce VRAM compared to baseline 3DGS, or state-of-the-art methods for composed scenes. Our rasterizer can render a combination of neural-visibility enabled assets
                     and normal 3DGS assets, enabling flexible usage for creators.
                 </p>
                  <image src="img/pipeline_fig.png" class="img-responsive" alt="overview"><br>
@@ -469,13 +467,21 @@
         
             
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-2">
                 <h3>
                     Citation
                 </h3>
-                <div class="form-group col-md-10 col-md-offset-1">
-                    <textarea id="bibtex" class="form-control" readonly>
-                    Coming
+                <div class="form-group col-md-12">
+                    <textarea id="bibtex" class="form-control" readonly >
+@misc{zoomers2025nvgs,
+    title={{NVGS}: Neural Visibility for Occlusion Culling in {3D} {Gaussian} Splatting}, 
+    author={Brent Zoomers and Florian Hahlbohm and Joni Vanherck and Lode Jorissen and Marcus Magnor and Nick Michiels},
+    year={2025},
+    eprint={2511.19202},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV},
+    url={https://arxiv.org/abs/2511.19202}, 
+}
                     </textarea>
                 </div>
             </div>
